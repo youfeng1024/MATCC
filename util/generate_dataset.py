@@ -68,10 +68,10 @@ if __name__ == "__main__":
     with open(f"./dataset/data/{args.universe}/{args.universe}_dl_test.pkl", "wb") as f:
         pickle.dump(dl_test, f)
 
-    with open(f"././dataset/data/{args.universe}/{args.universe}_dl_valid.pkl", "wb") as f:
+    with open(f"./dataset/data/{args.universe}/{args.universe}_dl_valid.pkl", "wb") as f:
         pickle.dump(dl_valid, f)
 
-    with open(f"././dataset/data/{args.universe}/{args.universe}_dl_train.pkl", "wb") as f:
+    with open(f"./dataset/data/{args.universe}/{args.universe}_dl_train.pkl", "wb") as f:
         pickle.dump(dl_train, f)
 
     if os.path.exists(f"{h_path}"):

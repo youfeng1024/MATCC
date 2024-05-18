@@ -11,9 +11,8 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Sampler
 from torch.utils.tensorboard import SummaryWriter
 
-from MATCC import MATCC
+from src.MATCC import MATCC
 from my_lr_scheduler import ChainedScheduler
-from BestDLinear_RWKV_Init import load_RWKV,load_DLinear_RWKV,load_DLinear
 
 # os.environ['CUDA_VISIBLE_DEVICES']="7" # 程序可见的GPU
 cpu_num = 4
@@ -48,7 +47,8 @@ class TrainConfig:
                         format='%(asctime)s - %(levelname)s - %(message)s')
 
     logger = logging.getLogger(f"Train {model_name}")
-    writer = SummaryWriter(log_dir=log_dir, filename_suffix=f"{model_name}_{seed}_")
+    writer = SummaryWriter(
+        log_dir=log_dir, filename_suffix=f"{model_name}_{seed}_")
 
     # 设置epoch, lr
     n_epoch = 75
@@ -61,7 +61,6 @@ class TrainConfig:
     warmUp_epoch = 10
     eta_min = 2e-5
 
-    
     weight_decay = 0.001
 
     # 模型输入特征
@@ -74,15 +73,15 @@ class TrainConfig:
     gate_input_end_index = 221
     beta = 10
     train_stop_loss_threshold = 0.95
-    device = torch.device(f"cuda:{GPU}" if torch.cuda.is_available() else "cpu")
+    device = torch.device(
+        f"cuda:{GPU}" if torch.cuda.is_available() else "cpu")
 
     # 模型初始化
     model = MATCC(d_model=d_model, d_feat=d_feat, seq_len=seq_len,
-                        t_nhead=n_head, S_dropout_rate=dropout, beta=beta).to(device)
-    best_init = load_DLinear(device)
-    model.load_state_dict(best_init,strict=False)
+                  t_nhead=n_head, S_dropout_rate=dropout, beta=beta).to(device)
 
-    train_optimizer = optim.Adam(model.parameters(), lr=lr, betas=(0.9, 0.999), weight_decay=weight_decay)
+    train_optimizer = optim.Adam(model.parameters(), lr=lr, betas=(
+        0.9, 0.999), weight_decay=weight_decay)
 
     lr_scheduler = ChainedScheduler(train_optimizer, T_0=T_0, T_mul=T_mult, eta_min=eta_min,
                                     last_epoch=-1, max_lr=lr, warmup_steps=warmUp_epoch,
@@ -133,7 +132,8 @@ class DailyBatchSamplerRandom(Sampler):
         # calculate number of samples in each batch
         self.daily_count = pd.Series(index=self.data_source.get_index(), dtype=np.float64).groupby(
             "datetime").size().values
-        self.daily_index = np.roll(np.cumsum(self.daily_count), 1)  # calculate begin index of each batch
+        # calculate begin index of each batch
+        self.daily_index = np.roll(np.cumsum(self.daily_count), 1)
         self.daily_index[0] = 0
 
     def __iter__(self):
@@ -158,7 +158,8 @@ def loss_fn(pred, label):
 
 def _init_data_loader(data, shuffle=True, drop_last=True):
     sampler = DailyBatchSamplerRandom(data, shuffle)
-    data_loader = DataLoader(data, sampler=sampler, drop_last=drop_last, num_workers=2, pin_memory=True)
+    data_loader = DataLoader(
+        data, sampler=sampler, drop_last=drop_last, num_workers=2, pin_memory=True)
     return data_loader
 
 
@@ -178,7 +179,7 @@ def train_epoch(data_loader, train_optimizer, lr_scheduler, model, device):
         label = data[:, -1, -1].to(device)
 
         pred = model(feature.float())
-    
+
         loss = loss_fn(pred, label)
         losses.append(loss.item())
 
@@ -206,7 +207,8 @@ def valid_epoch(data_loader, model, device):
             loss = loss_fn(pred, label)
             losses.append(loss.item())
 
-            daily_ic, daily_ric = calc_ic(pred.detach().cpu().numpy(), label.detach().cpu().numpy())
+            daily_ic, daily_ric = calc_ic(
+                pred.detach().cpu().numpy(), label.detach().cpu().numpy())
             ic.append(daily_ic)
             ric.append(daily_ric)
 
@@ -235,7 +237,6 @@ def train():
         dl_test = pickle.load(f)
     print("Data Loaded.")
 
-
     # 核心代码
 
     train_loader = _init_data_loader(dl_train, shuffle=True, drop_last=True)
@@ -248,7 +249,7 @@ def train():
     # Model
     model = TrainConfig.model
 
-    ## LR
+    # LR
 
     # train_optimizer = optim.Adam(model.parameters(), lr=TrainConfig.lr, betas=(0.9, 0.999),
     #                              weight_decay=TrainConfig.weight_decay)
@@ -257,7 +258,8 @@ def train():
 
     best_valid_loss = np.Inf
 
-    print("==" * 10 + f" Now is Training {TrainConfig.model_name}_{TrainConfig.seed} " + "==" * 10 + "\n")
+    print("==" * 10 +
+          f" Now is Training {TrainConfig.model_name}_{TrainConfig.seed} " + "==" * 10 + "\n")
 
     # 训练
     for step in range(TrainConfig.n_epoch):
@@ -267,21 +269,27 @@ def train():
         test_loss, test_metrics = valid_epoch(test_loader, model, device)
 
         if writer is not None:
-            writer.add_scalars("Valid metrics", valid_metrics, global_step=step)
+            writer.add_scalars(
+                "Valid metrics", valid_metrics, global_step=step)
             writer.add_scalars("Test metrics", test_metrics, global_step=step)
             writer.add_scalar("Train loss", train_loss, global_step=step)
             writer.add_scalar("Valid loss", val_loss, global_step=step)
             writer.add_scalar("Test loss", test_loss, global_step=step)
             writer.add_scalars("All loss Comparison",
-                               {"train loss": train_loss, "val loss": val_loss, "test loss": test_loss},
+                               {"train loss": train_loss,
+                                   "val loss": val_loss, "test loss": test_loss},
                                global_step=step)
-            writer.add_scalar("Learning rate", train_optimizer.param_groups[0]['lr'], global_step=step)
+            writer.add_scalar(
+                "Learning rate", train_optimizer.param_groups[0]['lr'], global_step=step)
 
-        print("==" * 10 + f" {TrainConfig.model_name}_{TrainConfig.seed} Epoch {step} " + "==" * 10)
-        print("Epoch %d, train_loss %.6f, valid_loss %.6f, test_loss %.6f " % (step, train_loss, val_loss, test_loss))
+        print(
+            "==" * 10 + f" {TrainConfig.model_name}_{TrainConfig.seed} Epoch {step} " + "==" * 10)
+        print("Epoch %d, train_loss %.6f, valid_loss %.6f, test_loss %.6f " %
+              (step, train_loss, val_loss, test_loss))
         print("Valid Dataset Metrics performance:{}\n".format(valid_metrics))
         print("Test Dataset Metrics performance:{}\n".format(test_metrics))
-        print("Learning rate :{}\n\n".format(train_optimizer.param_groups[0]['lr']))
+        print("Learning rate :{}\n\n".format(
+            train_optimizer.param_groups[0]['lr']))
 
         TrainConfig.logger.info(msg=f"\n===== Epoch {step} =====\ntrain loss:{train_loss}, "
                                     f"valid loss:{val_loss},test loss:{test_loss}\n"
@@ -298,7 +306,7 @@ def train():
             model_param = copy.deepcopy(model.state_dict())
             torch.save(model_param,
                        f'{TrainConfig.model_save_path}/{TrainConfig.model_name}_model_params_epoch_{step}_seed_{TrainConfig.seed}.pth')
-    
+
     print("SAVING LAST EPOCH RESULT AS THE TEST RESULT!")
     torch.save(model.state_dict(),
                f'{TrainConfig.model_save_path}/TEST_{TrainConfig.model_name}_model_params_seed_{TrainConfig.seed}.pth')

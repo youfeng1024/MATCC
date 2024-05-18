@@ -6,7 +6,7 @@ from torch.nn.modules.normalization import LayerNorm
 import math
 
 from RWKV import Block, RWKV_Init
-from DLinear import DLinear,DLinear_Init
+from DLinear import DLinear, DLinear_Init
 
 
 class SAttention(nn.Module):
@@ -57,10 +57,12 @@ class SAttention(nn.Module):
                 kh = k[:, :, i * dim:(i + 1) * dim]
                 vh = v[:, :, i * dim:(i + 1) * dim]
 
-            atten_ave_matrixh = torch.softmax(torch.matmul(qh, kh.transpose(1, 2)) / self.temperature, dim=-1)
+            atten_ave_matrixh = torch.softmax(torch.matmul(
+                qh, kh.transpose(1, 2)) / self.temperature, dim=-1)
             if self.attn_dropout:
                 atten_ave_matrixh = self.attn_dropout[i](atten_ave_matrixh)
-            att_output.append(torch.matmul(atten_ave_matrixh, vh).transpose(0, 1))
+            att_output.append(torch.matmul(
+                atten_ave_matrixh, vh).transpose(0, 1))
         att_output = torch.concat(att_output, dim=-1)
 
         # FFN
@@ -80,7 +82,8 @@ class Filter(nn.Module):
 
         self.trans = nn.Linear(d_input, d_output)
 
-        self.aggregate = nn.Conv1d(d_output, d_output, kernel_size=kernel, stride=stride, groups=d_output)
+        self.aggregate = nn.Conv1d(
+            d_output, d_output, kernel_size=kernel, stride=stride, groups=d_output)
 
         # 输入是[N, T, d_feat]
         conv_feat = math.floor((self.seq_len - kernel) / stride + 1)
@@ -105,7 +108,8 @@ class TemporalAttention(nn.Module):
         query = h[:, -1, :].unsqueeze(-1)
         lam = torch.matmul(h, query).squeeze(-1)  # [N, T, D] --> [N, T]
         lam = torch.softmax(lam, dim=1).unsqueeze(1)
-        output = torch.matmul(lam, z).squeeze(1)  # [N, 1, T], [N, T, D] --> [N, 1, D]
+        # [N, 1, T], [N, T, D] --> [N, 1, D]
+        output = torch.matmul(lam, z).squeeze(1)
         return output
 
 
@@ -123,24 +127,28 @@ class MATCC(nn.Module):
         # market
         self.gate_input_start_index = gate_input_start_index
         self.gate_input_end_index = gate_input_end_index
-        self.d_gate_input = (gate_input_end_index - gate_input_start_index)  # F'
+        self.d_gate_input = (gate_input_end_index -
+                             gate_input_start_index)  # F'
         self.feature_gate = Filter(self.d_gate_input, self.d_feat, seq_len)
 
         self.rwkv = Block(layer_id=0, n_embd=self.d_model,
                           n_attn=self.n_attn, n_head=self.n_head, ctx_len=300,
                           n_ffn=self.d_model, hidden_sz=self.d_model)
-        RWKV_Init(self.rwkv, vocab_size=self.d_model, n_embd=self.d_model, rwkv_emb_scale=1.0)
+        RWKV_Init(self.rwkv, vocab_size=self.d_model,
+                  n_embd=self.d_model, rwkv_emb_scale=1.0)
 
-        self.dlinear = DLinear(seq_len=seq_len, pred_len=seq_len, enc_in=self.d_model, kernel_size=3, individual=False)
-        DLinear_Init(self.dlinear, min_val=-1.5e-1, max_val=1.5e-1)
+        self.dlinear = DLinear(seq_len=seq_len, pred_len=seq_len,
+                               enc_in=self.d_model, kernel_size=3, individual=False)
+        DLinear_Init(self.dlinear, min_val=-5e-2, max_val=8e-2)
 
         self.layers = nn.Sequential(
             # feature layer
             nn.Linear(d_feat, d_model),
-            self.dlinear,#【N,T,D】
-            self.rwkv,#【N,T,D】
+            self.dlinear,  # 【N,T,D】
+            self.rwkv,  # 【N,T,D】
 
-            SAttention(d_model=d_model, nhead=s_nhead, dropout=S_dropout_rate),#[T,N,D]
+            SAttention(d_model=d_model, nhead=s_nhead,
+                       dropout=S_dropout_rate),  # [T,N,D]
 
             TemporalAttention(d_model=d_model),
             # decoder
@@ -148,9 +156,10 @@ class MATCC(nn.Module):
         )
 
     def forward(self, x):
-        x [N,T,[股票自身的,市场]]
+        x[N, T, [股票自身的, 市场]]
         src = x[:, :, :self.gate_input_start_index]  # N, T, D
-        gate_input = x[:, :, self.gate_input_start_index:self.gate_input_end_index]
+        gate_input = x[:, :,
+                       self.gate_input_start_index:self.gate_input_end_index]
         src = src + self.feature_gate.forward(gate_input)
 
         output = self.layers(src).squeeze(-1)

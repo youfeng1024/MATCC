@@ -13,7 +13,11 @@ This repository is the official implementation of MATCC: A Novel Approach for Ro
 
 3. Get the CSI300 and CSI800 stock instruments from [Qlib dataset update](https://github.com/chenditc/investment_data/releases) and put it in your qlib data directory.
 
-4. Use the dataset we have provided or use `yaml` for data preprocessing to get the dataset.
+4. Use the dataset we have provided or use `yaml` for data preprocessing to get the dataset. Just change the `universe` in `generate_dataset.py` and run the following commmand:
+
+```
+python generate_dataset.py --universe csi300
+```
 
 ### Preprocessing
 

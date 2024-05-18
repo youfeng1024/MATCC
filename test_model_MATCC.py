@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Sampler
 
-from MATCC import MATCC
+from src.MATCC import MATCC
 
 
 class TestConfig:
