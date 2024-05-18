@@ -229,11 +229,11 @@ def train():
     universe = TrainConfig.universe  # or 'csi800'
 
     # Please install qlib first before load the data.
-    with open(f'{TrainConfig.dataset_dir_path}/data/{universe}/{universe}_dl_train_2020_2023.pkl', 'rb') as f:
+    with open(f'{TrainConfig.dataset_dir_path}/{universe}/{universe}_dl_train_2020_2023.pkl', 'rb') as f:
         dl_train = pickle.load(f)
-    with open(f'{TrainConfig.dataset_dir_path}/data/{universe}/{universe}_dl_valid_2020_2023.pkl', 'rb') as f:
+    with open(f'{TrainConfig.dataset_dir_path}/{universe}/{universe}_dl_valid_2020_2023.pkl', 'rb') as f:
         dl_valid = pickle.load(f)
-    with open(f'{TrainConfig.dataset_dir_path}/data/{universe}/{universe}_dl_test_2020_2023.pkl', 'rb') as f:
+    with open(f'{TrainConfig.dataset_dir_path}/{universe}/{universe}_dl_test_2020_2023.pkl', 'rb') as f:
         dl_test = pickle.load(f)
     print("Data Loaded.")
 

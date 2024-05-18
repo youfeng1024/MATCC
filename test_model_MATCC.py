@@ -15,7 +15,7 @@ class TestConfig:
     GPU = 0
     universe = 'csi800'
     model_param_path = (
-        "./model_params/csi300/MaCDRT_Best_Init_DLinear_csi800_model_params_epoch_20_seed_18032.pth"
+        "./model_params/MATCC/csi800/TEST_MATCC_csi800_seed_11132.pth"
     )
     seed = os.path.basename(model_param_path).split("_")[-1][:-4]
     # seed = 15032
@@ -101,7 +101,7 @@ def _init_data_loader(data, shuffle=True, drop_last=False):
 
 def test():
     universe = TestConfig.universe
-    with open(f'{TestConfig.dataset_dir_path}/data/{universe}/{universe}_dl_test_2020_2023.pkl', 'rb') as f:
+    with open(f'{TestConfig.dataset_dir_path}/{universe}/{universe}_dl_test_2020_2023.pkl', 'rb') as f:
         dl_test = pickle.load(f)
     print("Data Loaded.")
 
