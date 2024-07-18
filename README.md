@@ -1,6 +1,10 @@
-# MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross_time Correlations
+# CIKM2024-MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations
 
-This repository is the official implementation of MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross_time Correlations.
+This repository is the official implementation of **MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations**.
+
+MATCC is a novel framework for robust stock price prediction, which explicitly extracts market trends as guiding information, decomposes stock data into trend and fluctuation components, and employs a carefully designed structure for mining cross-time correlation.
+
+![MATCC framework](fig/MATCC_structure.png)
 
 ## Requirements
 
@@ -56,6 +60,8 @@ python backtest.py
 
 ## Results
 
+### Overall performance
+
 Our model achieves the following performance on CSI300 (**2020.07 - 2023.12.31**):
 
 | Model name  | IC              | ICIR            | RankIC         | RankICIR        | AR              | IR              |
@@ -68,6 +74,18 @@ Our model achieves the following performance on CSI300 (**2020.07 - 2023.12.31**
 | LSTM        | 0.048424638     | 0.336684621     | 0.050138655    | 0.340297238     | 0.132869265     | 1.336330359     |
 | GAT         | 0.05297247      | 0.388511199     | 0.053731579    | 0.388697025     | 0.187204099     | 1.914184519     |
 | GRU         | 0.04625093      | 0.323989797     | 0.046433043    | 0.326022902     | 0.107347975     | 1.048304919     |
+
+![Performance comparison](fig/radia.png)
+
+### Portfolio Results
+
+Extreme Market environment
+
+![extreme market environment](fig/cumulative_return_202401_202403.png)
+
+Normal Market environment
+
+![normal market environment](fig/cumulative_return_202301_202303.png)
 
 ## Acknowledgement and Reference Repositories
 
