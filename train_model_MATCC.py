@@ -71,14 +71,13 @@ class TrainConfig:
     dropout = 0.5
     gate_input_start_index = 158
     gate_input_end_index = 221
-    beta = 10
     train_stop_loss_threshold = 0.95
     device = torch.device(
         f"cuda:{GPU}" if torch.cuda.is_available() else "cpu")
 
     # 模型初始化
     model = MATCC(d_model=d_model, d_feat=d_feat, seq_len=seq_len,
-                  t_nhead=n_head, S_dropout_rate=dropout, beta=beta).to(device)
+                  t_nhead=n_head, S_dropout_rate=dropout).to(device)
 
     train_optimizer = optim.Adam(model.parameters(), lr=lr, betas=(
         0.9, 0.999), weight_decay=weight_decay)
@@ -216,7 +215,7 @@ def valid_epoch(data_loader, model, device):
         'IC': np.mean(ic),
         'ICIR': np.mean(ic) / np.std(ic),
         'RIC': np.mean(ric),
-        'RICIR': np.mean(ic) / np.std(ric)
+        'RICIR': np.mean(ric) / np.std(ric)
     }
 
     return float(np.mean(losses)), metrics

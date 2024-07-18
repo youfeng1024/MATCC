@@ -116,7 +116,7 @@ class TemporalAttention(nn.Module):
 class MATCC(nn.Module):
     def __init__(self, d_feat=158, d_model=256, t_nhead=4, s_nhead=2,
                  seq_len=8, S_dropout_rate=0.5,
-                 gate_input_start_index=158, gate_input_end_index=221, beta=None):
+                 gate_input_start_index=158, gate_input_end_index=221):
         super().__init__()
 
         self.d_feat = d_feat
@@ -178,6 +178,6 @@ if __name__ == "__main__":
     out = gate.forward(d)
     print(out.shape)
     x_sample = x_sample.transpose(-2, -1)
-    model = RWKVDLinear(beta=5.0)
+    model = MATCC()
     y = model.forward(x_sample)
     print(y.shape)

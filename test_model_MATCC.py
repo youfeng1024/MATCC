@@ -45,13 +45,12 @@ class TestConfig:
     dropout = 0.5
     gate_input_start_index = 158
     gate_input_end_index = 221
-    beta = 10
     device = torch.device(
         f"cuda:{GPU}" if torch.cuda.is_available() else "cpu")
 
     # 模型初始化
     model = MATCC(d_model=d_model, d_feat=d_feat, seq_len=seq_len,
-                  t_nhead=n_head, S_dropout_rate=dropout, beta=beta).to(device)
+                  t_nhead=n_head, S_dropout_rate=dropout).to(device)
     if load_check:
         checkpoint = torch.load(model_param_path, map_location=device)
         model.load_state_dict(checkpoint["model_param"])
@@ -144,7 +143,7 @@ def test():
         'IC': np.mean(ic),
         'ICIR': np.mean(ic) / np.std(ic),
         'RIC': np.mean(ric),
-        'RICIR': np.mean(ic) / np.std(ric)
+        'RICIR': np.mean(ric) / np.std(ric)
     }
     print("\nTest Dataset Metrics performance:{}\n".format(metrics))
 
