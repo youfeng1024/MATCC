@@ -1,6 +1,6 @@
-# CIKM2024-MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations
+# CIKM2024-MATCC: a Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations
 
-This repository is the official implementation of **MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations**.
+This repository is the official implementation of **MATCC: a Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations**.
 
 MATCC is a novel framework for robust stock price prediction, which explicitly extracts market trends as guiding information, decomposes stock data into trend and fluctuation components, and employs a carefully designed structure for mining cross-time correlation.
 
@@ -62,9 +62,11 @@ python backtest.py
 
 ### Overall performance
 
-Our model achieves the following performance on CSI300 (**2020.07 - 2023.12.31**):
+Our model achieves the following performance on CSI300, CSI800, S&P500 (**2020.07 - 2023.12.31**) and NK225 (**2022.07 - 2024.07**):
 
-| Model name  | IC              | ICIR            | RankIC         | RankICIR        | AR              | IR              |
+![Performance comparison](fig/all_datasets_performance.png)
+
+<!-- | Model name  | IC              | ICIR            | RankIC         | RankICIR        | AR              | IR              |
 | ----------- | --------------- | --------------- | -------------- | --------------- | --------------- | --------------- |
 | Ours        | **0.117242833** | **1.024316702** | **0.08575864** | **0.870096253** | **0.803259517** | **8.466878624** |
 | MASTER      | 0.053792434     | 0.396283874     | 0.054635386    | 0.39024223      | 0.195310604     | 1.930453898     |
@@ -73,7 +75,7 @@ Our model achieves the following performance on CSI300 (**2020.07 - 2023.12.31**
 | ALSTM       | 0.043422655     | 0.304667419     | 0.041286052    | 0.303555486     | 0.110967154     | 1.092517725     |
 | LSTM        | 0.048424638     | 0.336684621     | 0.050138655    | 0.340297238     | 0.132869265     | 1.336330359     |
 | GAT         | 0.05297247      | 0.388511199     | 0.053731579    | 0.388697025     | 0.187204099     | 1.914184519     |
-| GRU         | 0.04625093      | 0.323989797     | 0.046433043    | 0.326022902     | 0.107347975     | 1.048304919     |
+| GRU         | 0.04625093      | 0.323989797     | 0.046433043    | 0.326022902     | 0.107347975     | 1.048304919     | -->
 
 ![Performance comparison](fig/radia.png)
 
