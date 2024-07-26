@@ -42,7 +42,7 @@ python train_model_MATCC.py
 
 ## Evaluation
 
-To evaluate my model on CSI300 or CSI800 dataset, you can change the `universe` and `model_param_path` in `test_model_MATCC.py` and run:
+To evaluate our model on CSI300 or CSI800 dataset, you can change the `universe` and `model_param_path` in `test_model_MATCC.py` and run:
 
 ```eval
 python test_model_MATCC.py
