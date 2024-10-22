@@ -1,6 +1,6 @@
-# CIKM2024-MATCC: a Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations
+# CIKM2024-MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations
 
-This repository is the official implementation of **MATCC: a Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations**.
+This repository is the official implementation of **MATCC: A Novel Approach for Robust Stock Price Prediction Incorporating Market Trends and Cross-time Correlations**.
 
 MATCC is a novel framework for robust stock price prediction, which explicitly extracts market trends as guiding information, decomposes stock data into trend and fluctuation components, and employs a carefully designed structure for mining cross-time correlation.
 
@@ -13,11 +13,11 @@ MATCC is a novel framework for robust stock price prediction, which explicitly e
 - pandas == 1.5.3
 - torch == 1.13.0
 
-2. Install [Qlib](https://github.com/SJTU-Quant/qlib). We recommend you to install Qlib from SJTU-Qlib.
+2. Install [Qlib](https://github.com/SJTU-DMTai/qlib). We recommend you to install Qlib from SJTU-Qlib.
 
 3. Get the CSI300 and CSI800 stock instruments from [Qlib dataset update](https://github.com/chenditc/investment_data/releases) and put it in your qlib data directory.
 
-4. Use the dataset we have provided. You can follow the link to get our preprocessed dataset [2020_2023](https://pan.baidu.com/s/15gt3FcnwqTBAy5oPbzhOsA?pwd=1234). If you fail to download from our link, you may try to use datasets from [MASTER](https://github.com/SJTU-Quant/MASTER).
+4. Use the dataset we have provided. You can follow the link to get our preprocessed dataset [2020_2023](https://pan.baidu.com/s/15gt3FcnwqTBAy5oPbzhOsA?pwd=1234). If you fail to download from our link, you may try to use datasets from [MASTER](https://github.com/SJTU-DMTai/MASTER).
 
 5. If you want to design and implement your own data preprocessing methods, please refer to `util/DropExtremeLabel.py`. If you want to change the period of the train/validation/test dataset, please modify `util/2023.yaml`. To get CSI300 or CSI800, just change the `market` in `util/2023.yaml` and `universe` in `util/generate_dataset.py`. Run the following commmand:
 
