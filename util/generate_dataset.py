@@ -37,7 +37,7 @@ if __name__ == "__main__":
     qlib.init(provider_uri=provider_uri, region=REG_CN)
     
     # 读取config文件
-    with open(f"./2023.yaml", 'r') as f:
+    with open(f"./util/2023.yaml", 'r') as f:
         config = yaml.safe_load(f)
 
     # 获取处理器配置，构造处理器文件路径
