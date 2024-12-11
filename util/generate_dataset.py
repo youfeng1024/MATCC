@@ -16,7 +16,6 @@ import qlib
 import sys
 from pathlib import Path
 import DropExtremeLabel
-from qlib.data.dataset.handler import DropExtremeLabel
 
 DIRNAME = Path(__file__).absolute().resolve().parent
 sys.path.append(str(DIRNAME))
