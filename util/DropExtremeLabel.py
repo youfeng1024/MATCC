@@ -11,9 +11,8 @@ from qlib.utils.serial import Serializable
 from qlib.utils.paral import datetime_groupby_apply
 from qlib.data.inst_processor import InstProcessor
 from qlib.data import D
-from qlib.data.dataset.processor import Processor, get_group_columns
+from qlib.data.dataset.processor import Processor, get_group_columns, datetime_groupby_apply
 import logging
-
 
 # def get_group_columns(df: pd.DataFrame, group: Union[Text, None]):
 #     """
