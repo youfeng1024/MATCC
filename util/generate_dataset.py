@@ -37,7 +37,7 @@ if __name__ == "__main__":
     qlib.init(provider_uri=provider_uri, region=REG_CN)
     
     # 读取config文件
-    with open(f"./util/2023.yaml", 'r') as f:
+    with open(f"./2023.yaml", 'r') as f:
         config = yaml.safe_load(f)
 
     # 获取处理器配置，构造处理器文件路径
@@ -69,20 +69,20 @@ if __name__ == "__main__":
         "train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
 
     # 创建数据集目录（如果不存在）
-    if not os.path.exists("./dataset/data/csi300"):
-        os.makedirs("./dataset/data/csi300")
+    if not os.path.exists("../dataset/data/csi300"):
+        os.makedirs("../dataset/data/csi300")
 
-    if not os.path.exists("./dataset/data/csi800"):
-        os.makedirs("./dataset/data/csi800")
+    if not os.path.exists("../dataset/data/csi800"):
+        os.makedirs("../dataset/data/csi800")
 
     # 保存测试、验证和训练数据到文件
-    with open(f"./dataset/data/{args.universe}/{args.universe}_dl_test.pkl", "wb") as f:
+    with open(f"../dataset/data/{args.universe}/{args.universe}_dl_test.pkl", "wb") as f:
         pickle.dump(dl_test, f)
 
-    with open(f"./dataset/data/{args.universe}/{args.universe}_dl_valid.pkl", "wb") as f:
+    with open(f"../dataset/data/{args.universe}/{args.universe}_dl_valid.pkl", "wb") as f:
         pickle.dump(dl_valid, f)
 
-    with open(f"./dataset/data/{args.universe}/{args.universe}_dl_train.pkl", "wb") as f:
+    with open(f"../dataset/data/{args.universe}/{args.universe}_dl_train.pkl", "wb") as f:
         pickle.dump(dl_train, f)
 
     # 删除处理器文件

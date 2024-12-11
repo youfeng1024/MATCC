@@ -11,9 +11,9 @@ data_handler_config: &data_handler_config
   instruments: *market
   infer_processors:
     - class: DropnaLabel
-      module_path: "util/DropExtremeLabel.py"
+      module_path: "DropExtremeLabel.py"
     - class: DropExtremeLabel
-      module_path: "util/DropExtremeLabel.py"
+      module_path: "DropExtremeLabel.py"
       kwargs:
         fields_group: label
         percentile: 0.975
