@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # 使用qlib默认数据
     provider_uri = "~/.qlib/qlib_data/cn_data"  # 目标目录
     # GetData().qlib_data(target_dir=provider_uri, region=REG_CN, exists_skip=True)
-    qlib.init(provider_uri=provider_uri, region=REG_CN)
+    qlib.init()
     
     # 读取config文件
     with open(f"./2023.yaml", 'r') as f:
