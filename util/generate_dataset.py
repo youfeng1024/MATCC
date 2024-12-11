@@ -33,7 +33,7 @@ if __name__ == "__main__":
     print(args)
     # 使用qlib默认数据
     provider_uri = "~/.qlib/qlib_data/cn_data"  # 目标目录
-    GetData().qlib_data(target_dir=provider_uri, region=REG_CN, exists_skip=True)
+    # GetData().qlib_data(target_dir=provider_uri, region=REG_CN, exists_skip=True)
     qlib.init(provider_uri=provider_uri, region=REG_CN)
     
     # 读取config文件
