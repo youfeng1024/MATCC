@@ -7,7 +7,7 @@ import os
 import argparse
 import yaml
 from qlib.data.dataset.handler import DataHandlerLP
-# from qlib.tests.data import GetData
+from qlib.tests.data import GetData
 # from qlib.workflow.record_temp import SignalRecord, PortAnaRecord, SigAnaRecord
 from qlib.workflow import R
 from qlib.utils import init_instance_by_config
@@ -46,14 +46,14 @@ if __name__ == "__main__":
     h_path = DIRNAME / f'handler_{config["task"]["dataset"]["kwargs"]["segments"]["train"][0].strftime("%Y%m%d")}' \
                        f'_{config["task"]["dataset"]["kwargs"]["segments"]["test"][1].strftime("%Y%m%d")}.pkl'
     
-    # 如果处理器文件不存在，则创建并保存
-    if not h_path.exists():
-        h = init_instance_by_config(h_conf)
-        h.to_pickle(h_path, dump_all=True)
-        print('Save preprocessed data to', h_path)
+    # # 如果处理器文件不存在，则创建并保存
+    # if not h_path.exists():
+    #     h = init_instance_by_config(h_conf)
+    #     h.to_pickle(h_path, dump_all=True)
+    #     print('Save preprocessed data to', h_path)
     
-    # 更新配置中的处理器路径
-    config["task"]["dataset"]["kwargs"]["handler"] = f"file://{h_path}"
+    # # 更新配置中的处理器路径
+    # config["task"]["dataset"]["kwargs"]["handler"] = f"file://{h_path}"
 
     print(config)
     print("\n" + "==" * 20 + "\n")
@@ -86,6 +86,6 @@ if __name__ == "__main__":
     with open(f"../dataset/data/{args.universe}/{args.universe}_dl_train.pkl", "wb") as f:
         pickle.dump(dl_train, f)
 
-    # 删除处理器文件
-    if os.path.exists(f"{h_path}"):
-        os.remove(f"{h_path}")
+    # # 删除处理器文件
+    # if os.path.exists(f"{h_path}"):
+    #     os.remove(f"{h_path}")
