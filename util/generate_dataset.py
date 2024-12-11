@@ -46,7 +46,7 @@ if __name__ == "__main__":
     h_path = DIRNAME / f'handler_{config["task"]["dataset"]["kwargs"]["segments"]["train"][0].strftime("%Y%m%d")}' \
                        f'_{config["task"]["dataset"]["kwargs"]["segments"]["test"][1].strftime("%Y%m%d")}.pkl'
     
-    # # 如果处理器文件不存在，则创建并保存
+    # # 如果处理器文件不存在，则暂存并保存
     # if not h_path.exists():
     #     h = init_instance_by_config(h_conf)
     #     h.to_pickle(h_path, dump_all=True)
