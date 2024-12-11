@@ -40,7 +40,7 @@ To train the model in the paper, run this command:
 python train_model_MATCC.py
 ```
 
-## Evaluation
+## Evaluation 
 
 To evaluate our model on CSI300 or CSI800 dataset, you can change the `universe` and `model_param_path` in `test_model_MATCC.py` and run:
 
