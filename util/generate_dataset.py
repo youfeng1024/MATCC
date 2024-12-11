@@ -70,11 +70,11 @@ if __name__ == "__main__":
         "train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
 
     # 创建数据集目录（如果不存在）
-    if not os.path.exists("../dataset/data/csi300"):
-        os.makedirs("../dataset/data/csi300")
+    if not os.path.exists("../dataset/csi300"):
+        os.makedirs("../dataset/csi300")
 
-    if not os.path.exists("../dataset/data/csi800"):
-        os.makedirs("../dataset/data/csi800")
+    if not os.path.exists("../dataset/csi800"):
+        os.makedirs("../dataset/csi800")
 
     # 保存测试、验证和训练数据到文件
     with open(f"../dataset/data/{args.universe}/{args.universe}_dl_test.pkl", "wb") as f:
