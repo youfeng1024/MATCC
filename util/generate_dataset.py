@@ -8,7 +8,7 @@ import argparse
 import yaml
 from qlib.data.dataset.handler import DataHandlerLP
 # from qlib.tests.data import GetData
-from qlib.workflow.record_temp import SignalRecord, PortAnaRecord, SigAnaRecord
+# from qlib.workflow.record_temp import SignalRecord, PortAnaRecord, SigAnaRecord
 from qlib.workflow import R
 from qlib.utils import init_instance_by_config
 from qlib.constant import REG_CN
