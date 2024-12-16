@@ -38,7 +38,7 @@ if __name__ == "__main__":
     qlib.init(provider_uri=provider_uri, region=REG_CN)
     
     # 读取config文件
-    with open(f"./2023.yaml", 'r') as f:
+    with open(f"./2024.yaml", 'r') as f:
         config = yaml.safe_load(f)
 
     # 获取处理器配置，构造处理器文件路径
@@ -63,9 +63,9 @@ if __name__ == "__main__":
 
     # 准备测试、验证和训练数据
     dl_test = dataset.prepare(
-        "test", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
+        "test", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
     dl_valid = dataset.prepare(
-        "valid", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
+        "valid", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
     dl_train = dataset.prepare(
         "train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
 
