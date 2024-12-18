@@ -42,8 +42,8 @@ if __name__ == "__main__":
         config = yaml.safe_load(f)
 
     # 获取处理器配置，构造处理器文件路径
-    h_conf = config["task"]["dataset"]["kwargs"]["handler"]
-    h_path = f'handler_{config["task"]["dataset"]["kwargs"]["segments"]["train"][0].strftime("%Y%m%d")}' \
+    # h_conf = config["task"]["dataset"]["kwargs"]["handler"]
+    # h_path = f'handler_{config["task"]["dataset"]["kwargs"]["segments"]["train"][0].strftime("%Y%m%d")}' \
                        f'_{config["task"]["dataset"]["kwargs"]["segments"]["test"][1].strftime("%Y%m%d")}.pkl'
     
     # # 如果处理器文件不存在，则暂存并保存
@@ -63,11 +63,11 @@ if __name__ == "__main__":
 
     # 准备测试、验证和训练数据
     dl_test = dataset.prepare(
-        "test", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
+        "test", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
     dl_valid = dataset.prepare(
         "valid", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
     dl_train = dataset.prepare(
-        "train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_I)
+        "train", col_set=["feature", "label"], data_key=DataHandlerLP.DK_L)
 
     # 创建数据集目录（如果不存在）
     if not os.path.exists("../dataset/csi300"):
