@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # 获取处理器配置，构造处理器文件路径
     # h_conf = config["task"]["dataset"]["kwargs"]["handler"]
     # h_path = f'handler_{config["task"]["dataset"]["kwargs"]["segments"]["train"][0].strftime("%Y%m%d")}' \
-                       f'_{config["task"]["dataset"]["kwargs"]["segments"]["test"][1].strftime("%Y%m%d")}.pkl'
+                    #    f'_{config["task"]["dataset"]["kwargs"]["segments"]["test"][1].strftime("%Y%m%d")}.pkl'
     
     # # 如果处理器文件不存在，则暂存并保存
     # if not h_path.exists():

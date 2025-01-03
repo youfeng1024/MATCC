@@ -73,7 +73,6 @@ analysis_freq = "{0}{1}".format(*Freq.parse(FREQ))
 # 获取回测结果
 report_normal, positions_normal = portfolio_metric_dict.get(analysis_freq)
 
-# 分析结果
 analysis = dict()
 # 计算不考虑成本的超额收益
 analysis["excess_return_without_cost"] = risk_analysis(
@@ -97,6 +96,8 @@ pprint(risk_analysis(report_normal["bench"], freq=analysis_freq))
 pprint(
     f"The following are analysis results of the excess return without cost({analysis_freq}).")
 pprint(analysis["excess_return_without_cost"])
+pprint(f"The following are analysis results of the excess return with cost({analysis_freq}).")
+pprint(analysis["excess_return_with_cost"])
 # 将不考虑成本的超额收益分析结果保存到CSV文件
 analysis["excess_return_without_cost"].to_csv(
     f"./label_pred/{universe}/{seed}.csv", header=True, index=True)

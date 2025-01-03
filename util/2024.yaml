@@ -39,6 +39,13 @@ market_data_handler_config: &market_data_handler_config
     - class: Fillna
       kwargs:
         fields_group: feature
+  learn_processors:
+    - class: DropnaLabel
+    - class: CSZscoreNorm
+      kwargs:
+        fields_group: label
+    - class: DropExtremeLabel
+      module_path: "DropExtremeLabel.py"
 task:
   dataset:
     class: MASTERTSDatasetH
