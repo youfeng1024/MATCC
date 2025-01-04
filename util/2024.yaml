@@ -24,7 +24,7 @@ data_handler_config: &data_handler_config
         fields_group: label
     - class: DropExtremeLabel
       module_path: "DropExtremeLabel.py"
-  label: ["Ref($close, -2) / Ref($close, -1) - 1"]
+  label: ["Ref($close, -5) / Ref($close, -1) - 1"]
 market_data_handler_config: &market_data_handler_config
   start_time: 2008-01-01
   end_time: 2023-12-31
